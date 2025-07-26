@@ -53,8 +53,7 @@ def create_todo_handler(request: CreateToDoRequest,
     todo: ToDo = create_todo(session=session, todo=todo) # id 에 int가 할당됨
 
 
-    todo_data[request.id] = request.model_dump()
-    return todo_data[request.id]
+    return ToDoSchema.model_validate(todo) # Pydantic 모델로 변환해서 반환
 
 
 @app.patch("/todos/{todo_id}") # 라우트 경로의 시작은 항상 /로 시작해야 함
