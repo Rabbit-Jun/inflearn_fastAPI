@@ -44,3 +44,13 @@ def test_get_todo(client, mocker):
     response = client.get("/todos/1")
     assert response.status_code == 404
     assert response.json() == {'detail': 'Todo not found'}
+
+def test_create_todo(client, mocker):
+    mocker.patch("main.create_todo", return_value=ToDo(id=1, contents="todo", is_done=False))
+    body ={
+        "contents": "test",
+        "is_done": False,
+    } # mocking이랑 달라도 테스트 통과됨
+    response = client.post("/todos", json= body)
+    assert response.status_code == 201
+    assert response.json() == {'id': 1, 'contents': 'todo', 'is_done': False}
