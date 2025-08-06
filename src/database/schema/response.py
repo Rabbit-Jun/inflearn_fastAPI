@@ -8,7 +8,6 @@ class ToDoSchema(BaseModel): # sqlalchmy의 ORM 모델을 Pydantic 모델로 변
 
     model_config: ClassVar[dict] ={
         "from_attributes": True,  # Pydantic이 ORM 객체를 지원하도록 설정합니다.
-        # orm_mode=True는 Pydantic이 SQLAlchemy ORM 모델을 사용할 수 있도록 합니다.
         # 이 설정은 Pydantic이 SQLAlchemy 모델의 속성을 읽을 수 있게 해줍니다.
         # 이는 SQLAlchemy ORM 모델을 Pydantic 모델로 변환할 때 유용합니다.
 

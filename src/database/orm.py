@@ -23,3 +23,11 @@ class ToDo(Base):
             is_done=request.is_done,
 
         ) # Create 메서드는 CreateToDoRequest 객체를 받아 ToDo 객체를 생성합니다.
+
+    def done(self): # 데이터를 변경하는 경우에는 이렇게 메서드를 정의해서 사용합니다.
+        self.is_done = True
+        return self
+
+    def undone(self):
+        self.is_done = False
+        return self
