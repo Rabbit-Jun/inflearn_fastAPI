@@ -46,11 +46,17 @@ def test_get_todo(client, mocker):
     assert response.json() == {'detail': 'Todo not found'}
 
 def test_create_todo(client, mocker):
+    create_spy = mocker.spy(ToDo, "create") # main.py에서 create_todo_handler 함수가 호출될 때 ToDo.create 메서드를 트래킹
     mocker.patch("main.create_todo", return_value=ToDo(id=1, contents="todo", is_done=False))
     body ={
         "contents": "test",
         "is_done": False,
     } # mocking이랑 달라도 테스트 통과됨
     response = client.post("/todos", json= body)
+
+    assert create_spy.spy_return.id is None
+    assert create_spy.spy_return.contents == "test"
+    assert create_spy.spy_return.is_done is False
+
     assert response.status_code == 201
     assert response.json() == {'id': 1, 'contents': 'todo', 'is_done': False}
