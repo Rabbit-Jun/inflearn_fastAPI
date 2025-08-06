@@ -1,17 +1,16 @@
-from fastapi.testclient import TestClient
-from  main import app
+
 from database.orm import ToDo
 
 
-client = TestClient(app=app) # main.py에서 FastAPI 인스턴스를 가져와서 테스트 클라이언트 생성
 
 
-def test_health_check():
+
+def test_health_check(client):
     response= client.get("/")
     assert response.status_code == 200
     assert response.json() == {"ping": "pong"}  
 
-def test_get_todos(mocker):
+def test_get_todos(client, mocker ):
 
     mocker.patch("main.get_todos",return_value=[
         ToDo(id=1, contents="FastAPI Section 0", is_done=True),
